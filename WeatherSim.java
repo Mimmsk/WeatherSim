@@ -1,3 +1,5 @@
+import java.util.AbstractMap;
+import java.util.Map;
 import java.util.Random;
 
 public class WeatherSim {
@@ -19,32 +21,38 @@ public class WeatherSim {
 
             for (int i = 0; i < 5; i++) {
                 int randomNumber = random.nextInt(3);
-                currentState = getNextState(currentState, randomNumber);
-                System.out.println(" Event " + (i + 1) + ": " + currentState);
+                Map.Entry<State, Event> result = getNextState(currentState, randomNumber);
+                currentState = result.getKey();
+                Event event = result.getValue();
+                if (event != null) {
+                    System.out.println(" Event " + (i + 1) + ": " + currentState + " (Event: " + event + ")");
+                } else {
+                  System.out.println(" Event " + (i + 1) + ": " + currentState + " (No Change)");
+                }
             }
             System.out.println();
         }
 
     } 
 
-    public static State getNextState(State currentState, int random) {
+    public static Map.Entry<State, Event> getNextState(State currentState, int randomNumber) {
         switch (currentState) {
             case CLEAR:
-              if (random == 2) return State.CLOUDY;
+              if (randomNumber == 2) return new AbstractMap.SimpleEntry<> (State.CLOUDY, Event.HUMIDITY_INCREASING);
               break;
             case CLOUDY:
-              if (random == 0) return State.CLEAR;
-              if (random == 2) return State.RAINING;
+              if (randomNumber == 0) return new AbstractMap.SimpleEntry<> (State.CLEAR, Event.GETTING_WARMER);
+              if (randomNumber == 2) return new AbstractMap.SimpleEntry<> (State.RAINING, Event.GETTING_COLDER);
               break;
             case RAINING:
-              if (random == 0) return State.CLOUDY;
-              if (random == 2) return State.SEVERE_WEATHER;
+              if (randomNumber == 0) return new AbstractMap.SimpleEntry<> (State.CLOUDY, Event.GETTING_WARMER);
+              if (randomNumber == 2) return new AbstractMap.SimpleEntry<> (State.SEVERE_WEATHER, Event.WIND_INCREASING);
               break;
             case SEVERE_WEATHER:
-              if (random == 0) return State.RAINING;
+              if (randomNumber == 0) return new AbstractMap.SimpleEntry<> (State.RAINING, Event.WIND_INCREASING);
               break;
         }
-        return currentState;
+        return new AbstractMap.SimpleEntry<> (currentState, null);
 
 
         }
