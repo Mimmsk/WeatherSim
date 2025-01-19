@@ -1,7 +1,7 @@
 Description : "Our" Program is a simulated weather cycle using a finite state machine that models a 7 day weather pattern that includes:
 States like Clear, Cloudy, Raining, and Severe Weather.
 Events like Getting Warmer, Getting Colder, Humidity Increasing and Wind Increasing.
-Flow transitions with the technocal requirements Clear <-> Cloudy <-> Raining <-> Severe Weather 
+Flow transitions with the technical requirements Clear <-> Cloudy <-> Raining <-> Severe Weather 
 
 Team : Monet K, "Sarai F", "Camille O", "Ken Y"
 
